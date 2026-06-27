@@ -2,7 +2,7 @@ module.exports = {
   siteMetadata: {
     title: "Jacob & Kate Nemeth",
     description: "Join us as we become the Nemeths — February 27, 2027, Texas Hill Country.",
-    siteUrl: "https://your-domain-here.com",
+    siteUrl: "https://two2727.com",
   },
   plugins: [
     {
@@ -26,17 +26,17 @@ module.exports = {
     "gatsby-plugin-image",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
-    // {
-    //   resolve: "gatsby-plugin-manifest",
-    //   options: {
-    //     name: "The Nemeths — Wedding 2027",
-    //     short_name: "The Nemeths",
-    //     start_url: "/",
-    //     background_color: "#F9F5EE",
-    //     theme_color: "#7A8C6E",
-    //     display: "standalone",
-    //     icon: "src/images/icon.png", // add a small N monogram or ring icon here
-    //   },
-    // },
+    {
+      resolve: "gatsby-plugin-manifest",
+      options: {
+        name: "The Nemeths — Wedding 2027",
+        short_name: "The Nemeths",
+        start_url: "/",
+        background_color: "#F9F5EE",
+        theme_color: "#7A8C6E",
+        display: "standalone",
+        icon: "src/images/icon.png",
+      },
+    },
   ],
 }

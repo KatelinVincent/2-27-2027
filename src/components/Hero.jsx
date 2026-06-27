@@ -37,6 +37,10 @@ function useCountdown(targetDate) {
 }
 
 export default function Hero() {
+
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+
   const { days, hours, minutes, seconds } = useCountdown("2027-02-27T17:00:00")
 
   const pad = n => String(n).padStart(2, "0")
@@ -126,10 +130,10 @@ export default function Hero() {
         animation: "fadeUp 1s 0.6s ease both", opacity: 0, animationFillMode: "both",
       }}>
         {[
-          { value: days,             label: "Days" },
-          { value: pad(hours),       label: "Hours" },
-          { value: pad(minutes),     label: "Minutes" },
-          { value: pad(seconds),     label: "Seconds" },
+          { value: mounted ? days : "--",        label: "Days" },
+          { value: mounted ? pad(hours) : "--",  label: "Hours" },
+          { value: mounted ? pad(minutes) : "--", label: "Minutes" },
+          { value: mounted ? pad(seconds) : "--", label: "Seconds" },
         ].map(({ value, label }) => (
           <div key={label} style={{ textAlign: "center" }}>
             <span style={{
