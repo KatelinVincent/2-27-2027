@@ -16,22 +16,23 @@ function BotanicalSVG({ style }) {
   )
 }
 
-function useCountdown(targetDate) {
-  const calculate = () => {
-    const diff = new Date(targetDate) - new Date()
-    if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 }
-    return {
-      days:    Math.floor(diff / 86400000),
-      hours:   Math.floor((diff % 86400000) / 3600000),
-      minutes: Math.floor((diff % 3600000)  / 60000),
-      seconds: Math.floor((diff % 60000)    / 1000),
-    }
+function calculateTimeLeft(targetDate) {
+  const diff = new Date(targetDate) - new Date()
+  if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 }
+  return {
+    days:    Math.floor(diff / 86400000),
+    hours:   Math.floor((diff % 86400000) / 3600000),
+    minutes: Math.floor((diff % 3600000)  / 60000),
+    seconds: Math.floor((diff % 60000)    / 1000),
   }
-  const [time, setTime] = useState(calculate)
+}
+
+function useCountdown(targetDate) {
+  const [time, setTime] = useState(() => calculateTimeLeft(targetDate))
   useEffect(() => {
-    const id = setInterval(() => setTime(calculate()), 1000)
+    const id = setInterval(() => setTime(calculateTimeLeft(targetDate)), 1000)
     return () => clearInterval(id)
-  }, [])
+  }, [targetDate])
   return time
 }
 
