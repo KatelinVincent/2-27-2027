@@ -11,11 +11,6 @@ const cards = [
     body: "Immediately following the ceremony. Dinner, dancing, and all the good things.",
     confirmed: true,
   },
-  {
-    title: "Other Events",
-    body: "Rehearsal dinner, farewell brunch, and more. Watch this space.",
-    confirmed: false,
-  },
 ]
 
 export default function Details() {

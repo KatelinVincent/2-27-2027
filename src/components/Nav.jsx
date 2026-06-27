@@ -40,7 +40,6 @@ export default function Nav() {
           { label: "Photos",     href: "#photos" },
           { label: "Details",    href: "#details" },
           { label: "The Aisle",  href: "#game" },
-          { label: "Love Story Quiz", href: "#love-story-quiz" },
         ].map(({ label, href }) => (
           <li key={href}>
             <a href={href} style={linkStyle}>{label}</a>

@@ -12,10 +12,9 @@ export default function Registry() {
       </p>
 
       <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-        <a href="https://www.yourregistrylink.com" target="_blank" rel="noopener noreferrer" className="registry-btn">
-          Registry Name
+        <a href="https://www.zola.com/registry/kateandjacobfebruary27" target="_blank" rel="noopener noreferrer" className="registry-btn">
+          Zola Registry
         </a>
-        {/* Add more links as needed */}
       </div>
     </section>
   )
