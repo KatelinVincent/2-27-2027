@@ -36,6 +36,7 @@ const links = [
   { label: "Photos",    href: "#photos" },
   { label: "Details",   href: "#details" },
   { label: "The Aisle", href: "#game" },
+  { label: "Registry",  href: "#registry" },
 ]
 
 export default function Nav() {
