@@ -8,7 +8,7 @@ export default function Registry() {
       <div className="divider-ornament">— N —</div>
 
       <p style={{ fontSize: "0.85rem", color: "var(--dusty)", lineHeight: 1.8, marginTop: "1.5rem", marginBottom: "2rem" }}>
-        Your presence is the greatest gift. If you'd like to honor us further, we've registered at the links below.
+      We're just excited to celebrate with you. If you want to send us off with something, we've registered at the links below.
       </p>
 
       <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
