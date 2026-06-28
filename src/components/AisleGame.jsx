@@ -280,6 +280,7 @@ export default function AisleGame() {
     function moveRight() { if (gamePhase === "playing") playerX = Math.min(W - 65, playerX + 22) }
 
     const onKey = e => {
+      if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return
       if (["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"," "].includes(e.key)) e.preventDefault()
       if (gamePhase === "idle" || gamePhase === "dead" || gamePhase === "win") { startGame(); return }
       if (e.key === "ArrowUp")    moveUp()
