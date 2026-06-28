@@ -34,28 +34,7 @@ Open `http://localhost:8000` in your browser.
 | Site URL (for SEO) | `gatsby-config.js` — update `siteUrl` |
 | Color palette | `src/styles/global.css` — CSS variables in `:root` |
 
----
 
-## Adding Photos
-
-1. Drop your photos into `src/images/` — name them:
-   - `photo-tall.jpg` (the large left portrait)
-   - `photo-1.jpg` through `photo-4.jpg`
-
-2. Open `src/components/Photos.jsx` and replace each `<PhotoPlaceholder />` with:
-
-```jsx
-<StaticImage
-  src="../images/photo-tall.jpg"
-  alt="Jacob and Kate"
-  layout="fullWidth"
-  style={{ borderRadius: 6, height: "100%" }}
-/>
-```
-
-Make sure to uncomment the `StaticImage` import at the top of the file.
-
----
 
 ## Deploying to Netlify
 

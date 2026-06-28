@@ -5,17 +5,17 @@ const timelineItems = [
   {
     year: "Where We Met",
     quote: "From Neighbors to Soulmates.",
-    detail: "We met during Jacob's senior year of college — we were neighbors, and honestly, it started with his cooking and my appetite. We spent so much time together that somewhere between shared meals and late nights, friendship turned into something a lot more.",
+    detail: "We met during Jacob's senior year of college. We were neighbors, it started with his cooking and my appetite. We spent so much time together telling stories, sharing laughs and at some point, we began to see each other as more than friends.",
   },
   {
     year: "First Date",
-    quote: "A burger and a movie.",
-    detail: "Our first date was a P. Terry's run in my car followed by a movie on my couch. Nothing fancy, nothing planned — just us. Looking back, it was perfect.",
+    quote: "Tacos in San Antonio.",
+    detail: "Given our start as friends, we did not have a traditional first date. But the first time we dressed up and planned a night out, he took me to a taco spot in San Antonio followed by coffes at a local cafe by the river. After that, we stayed at his parents house and I got to meet what would become my second family. It was a perfect night.",
   },
   {
     year: "The Proposal",
     quote: "He asked. I said yes.",
-    detail: "Jacob proposed in the Conservatory Garden in Central Park — one of the most beautiful spots in the city we now call home. He got down on one knee surrounded by flowers and city energy, and I didn't hesitate for a second.",
+    detail: "Jacob proposed in the Conservatory Garden in Central Park. He had printed out many maps in order to plan an organic walk through the park. He got down on one knee in the middle of the garden and asked me to marry him. I said yes, of course.",
   },
   {
     year: "February 27, 2027",

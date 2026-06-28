@@ -4,6 +4,22 @@ import { StaticImage } from "gatsby-plugin-image"
 export default function Photos() {
   return (
     <>
+      <style>{`
+        @media (max-width: 600px) {
+          .engagement-grid {
+            grid-template-columns: 1fr !important;
+            grid-auto-rows: auto !important;
+          }
+          .engagement-grid > div {
+            grid-row: span 1 !important;
+            grid-column: span 1 !important;
+          }
+          .engagement-grid > div img {
+            height: auto !important;
+          }
+        }
+      `}</style>
+
       {/* ── Engagement Photos ── */}
       <div
         id="photos"
@@ -18,6 +34,7 @@ export default function Photos() {
           <div className="divider-ornament">— N —</div>
 
           <div
+            className="engagement-grid"
             style={{
               display: "grid",
               gridTemplateColumns: "1fr 1.6fr 1fr",
@@ -26,75 +43,26 @@ export default function Photos() {
               marginTop: "2rem",
             }}
           >
-            {/* Left tall — spans 2 rows */}
             <div style={{ gridRow: "span 2" }}>
-              <StaticImage
-                src="../images/photo-9.jpg"
-                alt="Jacob and Kate"
-                layout="fullWidth"
-                style={{ borderRadius: 6, height: "100%" }}
-                imgStyle={{ objectFit: "cover" }}
-              />
+              <StaticImage src="../images/photo-9.jpg" alt="Jacob and Kate" layout="fullWidth" style={{ borderRadius: 6, height: "100%" }} imgStyle={{ objectFit: "cover" }} />
             </div>
-            {/* Center tall — spans 2 rows */}
             <div style={{ gridRow: "span 2" }}>
-              <StaticImage
-                src="../images/photo-7.jpg"
-                alt="Jacob and Kate"
-                layout="fullWidth"
-                style={{ borderRadius: 6, height: "100%" }}
-                imgStyle={{ objectFit: "cover", objectPosition: "center top" }}
-              />
+              <StaticImage src="../images/photo-7.jpg" alt="Jacob and Kate" layout="fullWidth" style={{ borderRadius: 6, height: "100%" }} imgStyle={{ objectFit: "cover", objectPosition: "center top" }} />
             </div>
-            {/* Top right — single tall */}
             <div style={{ gridRow: "span 2" }}>
-              <StaticImage
-                src="../images/photo-5.jpg"
-                alt="Jacob and Kate"
-                layout="fullWidth"
-                style={{ borderRadius: 6, height: "100%" }}
-                imgStyle={{ objectFit: "cover" }}
-              />
+              <StaticImage src="../images/photo-5.jpg" alt="Jacob and Kate" layout="fullWidth" style={{ borderRadius: 6, height: "100%" }} imgStyle={{ objectFit: "cover" }} />
             </div>
-
-            {/* Full-width horizontal — taller */}
             <div style={{ gridColumn: "span 3", gridRow: "span 2" }}>
-              <StaticImage
-                src="../images/photo-10.jpg"
-                alt="Jacob and Kate"
-                layout="fullWidth"
-                style={{ borderRadius: 6, height: "100%" }}
-                imgStyle={{ objectFit: "cover", objectPosition: "center 40%" }}
-              />
-            </div>
-
-            {/* Bottom row */}
-            <div style={{ gridRow: "span 2" }}>
-              <StaticImage
-                src="../images/photo-8.jpg"
-                alt="Jacob and Kate"
-                layout="fullWidth"
-                style={{ borderRadius: 6, height: "100%" }}
-                imgStyle={{ objectFit: "cover" }}
-              />
+              <StaticImage src="../images/photo-10.jpg" alt="Jacob and Kate" layout="fullWidth" style={{ borderRadius: 6, height: "100%" }} imgStyle={{ objectFit: "cover", objectPosition: "center 40%" }} />
             </div>
             <div style={{ gridRow: "span 2" }}>
-              <StaticImage
-                src="../images/photo-12.jpg"
-                alt="Jacob and Kate"
-                layout="fullWidth"
-                style={{ borderRadius: 6, height: "100%" }}
-                imgStyle={{ objectFit: "cover" }}
-              />
+              <StaticImage src="../images/photo-8.jpg" alt="Jacob and Kate" layout="fullWidth" style={{ borderRadius: 6, height: "100%" }} imgStyle={{ objectFit: "cover" }} />
             </div>
             <div style={{ gridRow: "span 2" }}>
-              <StaticImage
-                src="../images/photo-11.jpg"
-                alt="Jacob and Kate"
-                layout="fullWidth"
-                style={{ borderRadius: 6, height: "100%" }}
-                imgStyle={{ objectFit: "cover" }}
-              />
+              <StaticImage src="../images/photo-12.jpg" alt="Jacob and Kate" layout="fullWidth" style={{ borderRadius: 6, height: "100%" }} imgStyle={{ objectFit: "cover" }} />
+            </div>
+            <div style={{ gridRow: "span 2" }}>
+              <StaticImage src="../images/photo-11.jpg" alt="Jacob and Kate" layout="fullWidth" style={{ borderRadius: 6, height: "100%" }} imgStyle={{ objectFit: "cover" }} />
             </div>
           </div>
         </div>
@@ -111,41 +79,26 @@ export default function Photos() {
           layout="fullWidth"
           style={{ position: "absolute", inset: 0, height: "100%" }}
           imgStyle={{ objectFit: "cover", objectPosition: "center 50%" }}
-                  />
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: "rgba(0,0,0,0.18)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "column",
-            gap: "0.5rem",
-          }}
-        >
-          <p
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: "clamp(1.4rem, 4vw, 2.4rem)",
-              color: "white",
-              letterSpacing: "0.05em",
-              margin: 0,
-              textShadow: "0 1px 8px rgba(0,0,0,0.4)",
-            }}
-          >
+        />
+        <div style={{
+          position: "absolute", inset: 0,
+          background: "rgba(0,0,0,0.18)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          flexDirection: "column", gap: "0.5rem",
+        }}>
+          <p style={{
+            fontFamily: "var(--font-serif)",
+            fontSize: "clamp(1.4rem, 4vw, 2.4rem)",
+            color: "white", letterSpacing: "0.05em", margin: 0,
+            textShadow: "0 1px 8px rgba(0,0,0,0.4)",
+          }}>
             February 27, 2027
           </p>
-          <p
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "0.75rem",
-              color: "rgba(255,255,255,0.85)",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              margin: 0,
-            }}
-          >
+          <p style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: "0.75rem", color: "rgba(255,255,255,0.85)",
+            letterSpacing: "0.2em", textTransform: "uppercase", margin: 0,
+          }}>
             Windemere Farm · San Marcos, Texas
           </p>
         </div>

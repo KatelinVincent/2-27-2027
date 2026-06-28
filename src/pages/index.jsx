@@ -6,10 +6,12 @@ import Photos from "../components/Photos"
 import AisleGame from "../components/AisleGame"
 import Details from "../components/Details"
 import Registry from "../components/Registry"
+import SignupPopup from "../components/alertPopUp"
 
 export default function IndexPage() {
   return (
     <Layout>
+      <SignupPopup />
       <Hero />
       <Story />
       <Photos />

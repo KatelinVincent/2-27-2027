@@ -224,7 +224,7 @@ export default function AisleGame() {
       drawAltar()
       obstacles.forEach(drawObstacle)
       drawPlayer()
-      if (gamePhase === "idle") drawOverlay("Help Jacob & Kate reach the altar", "Hop up through each lane — avoid the chaos", "Arrow keys · WASD · swipe · or tap Up / Down")
+      if (gamePhase === "idle") drawOverlay("Help Jacob & Kate reach the altar", "Hop up through each lane — avoid the chaos", "Arrow keys to move &nbsp;·&nbsp; Mobile: tap Up / Down or swipe")
       if (gamePhase === "dead") drawOverlay("Almost — try again?", `Score: ${scoreVal}`, "Start or any key to retry")
       if (gamePhase === "win")  drawOverlay("The Nemeths made it!", "See you February 27th", `Final score: ${scoreVal}`)
     }
@@ -280,12 +280,12 @@ export default function AisleGame() {
     function moveRight() { if (gamePhase === "playing") playerX = Math.min(W - 65, playerX + 22) }
 
     const onKey = e => {
-      if (["ArrowUp","ArrowDown","ArrowLeft","ArrowRight","w","a","s","d"," "].includes(e.key)) e.preventDefault()
+      if (["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"," "].includes(e.key)) e.preventDefault()
       if (gamePhase === "idle" || gamePhase === "dead" || gamePhase === "win") { startGame(); return }
-      if (e.key === "ArrowUp"    || e.key === "w") moveUp()
-      if (e.key === "ArrowDown"  || e.key === "s") moveDown()
-      if (e.key === "ArrowLeft"  || e.key === "a") moveLeft()
-      if (e.key === "ArrowRight" || e.key === "d") moveRight()
+      if (e.key === "ArrowUp")    moveUp()
+      if (e.key === "ArrowDown")  moveDown()
+      if (e.key === "ArrowLeft")  moveLeft()
+      if (e.key === "ArrowRight") moveRight()
     }
 
     let tx = 0, ty = 0
