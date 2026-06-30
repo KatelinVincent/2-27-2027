@@ -937,115 +937,114 @@ export default function AisleGame() {
         }}>{status}</p>
 
 
-        {/* Game over panel: leaderboard + submit + play again */}
-        {gameOver && (
-          <div style={{ maxWidth: 340, margin: "1rem auto 0" }}>
-
-            {/* Top 5 leaderboard */}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: "0.75rem" }}>
-              <div style={{ width: 30, height: 1, background: C.sageL }} />
-              <span style={{ fontFamily: "'Jost',sans-serif", fontSize: "0.55rem", letterSpacing: "0.25em", textTransform: "uppercase", color: C.sage }}>
-                Leaderboard
-              </span>
-              <div style={{ width: 30, height: 1, background: C.sageL }} />
-            </div>
-            {lbLoading ? (
-              <p style={{ fontSize: "0.75rem", color: C.dusty, fontStyle: "italic" }}>Loading...</p>
-            ) : leaderboard.length === 0 ? (
-              <p style={{ fontSize: "0.75rem", color: C.dusty, fontStyle: "italic" }}>No scores yet — be the first!</p>
-            ) : (
-              <div style={{ borderTop: `1px solid ${C.linenD}` }}>
-                {leaderboard.slice(0, 5).map((entry, i) => (
-                  <div key={`${entry.name}-${entry.created_at}-${i}`} style={{
-                    display: "flex", justifyContent: "space-between", alignItems: "center",
-                    padding: "0.45rem 0.5rem", borderBottom: `1px solid ${C.linenD}`,
-                    background: i === 0 ? "rgba(200,169,110,0.08)" : "transparent",
-                  }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                      <span style={{
-                        fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic",
-                        fontSize: "0.9rem", color: i < 3 ? C.gold : C.dusty, minWidth: 18,
-                      }}>{i === 0 ? "♛" : i + 1}</span>
-                      <span style={{
-                        fontFamily: "'Jost',sans-serif", fontSize: "0.72rem",
-                        letterSpacing: "0.06em", color: C.text,
-                      }}>{entry.name}</span>
-                    </div>
+        {/* Top 5 leaderboard — always visible */}
+        <div style={{ maxWidth: 340, margin: "1rem auto 0" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: "0.75rem" }}>
+            <div style={{ width: 30, height: 1, background: C.sageL }} />
+            <span style={{ fontFamily: "'Jost',sans-serif", fontSize: "0.55rem", letterSpacing: "0.25em", textTransform: "uppercase", color: C.sage }}>
+              Leaderboard
+            </span>
+            <div style={{ width: 30, height: 1, background: C.sageL }} />
+          </div>
+          {lbLoading ? (
+            <p style={{ fontSize: "0.75rem", color: C.dusty, fontStyle: "italic" }}>Loading...</p>
+          ) : leaderboard.length === 0 ? (
+            <p style={{ fontSize: "0.75rem", color: C.dusty, fontStyle: "italic" }}>No scores yet — be the first!</p>
+          ) : (
+            <div style={{ borderTop: `1px solid ${C.linenD}` }}>
+              {leaderboard.slice(0, 5).map((entry, i) => (
+                <div key={`${entry.name}-${entry.created_at}-${i}`} style={{
+                  display: "flex", justifyContent: "space-between", alignItems: "center",
+                  padding: "0.45rem 0.5rem", borderBottom: `1px solid ${C.linenD}`,
+                  background: i === 0 ? "rgba(200,169,110,0.08)" : "transparent",
+                }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                     <span style={{
                       fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic",
-                      fontSize: "1rem", color: C.sage,
-                    }}>{entry.score}</span>
+                      fontSize: "0.9rem", color: i < 3 ? C.gold : C.dusty, minWidth: 18,
+                    }}>{i === 0 ? "♛" : i + 1}</span>
+                    <span style={{
+                      fontFamily: "'Jost',sans-serif", fontSize: "0.72rem",
+                      letterSpacing: "0.06em", color: C.text,
+                    }}>{entry.name}</span>
                   </div>
-                ))}
-              </div>
-            )}
+                  <span style={{
+                    fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic",
+                    fontSize: "1rem", color: C.sage,
+                  }}>{entry.score}</span>
+                </div>
+              ))}
+            </div>
+          )}
 
-            {/* Score submission */}
-            {!submitted ? (
-              <div style={{
-                padding: "1rem 1.25rem", border: `1px solid ${C.linenD}`,
-                borderRadius: 8, background: C.ivory, marginTop: "1rem",
-              }}>
-                {nameKnown ? (
-                  <>
-                    <p style={{ fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic", fontSize: "1rem", color: C.warm, margin: "0 0 0.6rem" }}>
-                      Submit as <strong>{playerName}</strong>?
-                    </p>
-                    <div style={{ display: "flex", gap: "0.5rem", justifyContent: "center" }}>
-                      <button onClick={() => submitScore(playerName, dist)} style={{
+          {/* Game over: submit + play again */}
+          {gameOver && (
+            <>
+              {!submitted ? (
+                <div style={{
+                  padding: "1rem 1.25rem", border: `1px solid ${C.linenD}`,
+                  borderRadius: 8, background: C.ivory, marginTop: "1rem",
+                }}>
+                  {nameKnown ? (
+                    <>
+                      <p style={{ fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic", fontSize: "1rem", color: C.warm, margin: "0 0 0.6rem" }}>
+                        Submit as <strong>{playerName}</strong>?
+                      </p>
+                      <div style={{ display: "flex", gap: "0.5rem", justifyContent: "center" }}>
+                        <button onClick={() => submitScore(playerName, dist)} style={{
+                          fontFamily: "'Jost',sans-serif", fontSize: "0.62rem", letterSpacing: "0.2em",
+                          textTransform: "uppercase", padding: "0.5rem 1.2rem", border: "none",
+                          color: "white", background: C.sage, borderRadius: 4, cursor: "pointer",
+                        }}>Submit ({dist})</button>
+                        <button onClick={() => setNameKnown(false)} style={{
+                          fontFamily: "'Jost',sans-serif", fontSize: "0.62rem", letterSpacing: "0.2em",
+                          textTransform: "uppercase", padding: "0.5rem 1rem", border: `0.5px solid ${C.dusty}`,
+                          color: C.dusty, background: "transparent", borderRadius: 4, cursor: "pointer",
+                        }}>Change Name</button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <p style={{ fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic", fontSize: "1rem", color: C.warm, margin: "0 0 0.6rem" }}>
+                        Sign the guestbook
+                      </p>
+                      <input
+                        type="text" value={nameInput} onChange={e => setNameInput(e.target.value)}
+                        placeholder="Your name" maxLength={24} autoFocus
+                        onKeyDown={e => { if (e.key === "Enter") handleSubmit() }}
+                        style={{
+                          fontFamily: "'Jost',sans-serif", fontSize: "0.8rem", padding: "0.5rem 0.75rem",
+                          border: `1px solid ${C.linenD}`, borderRadius: 4, width: "100%",
+                          boxSizing: "border-box", background: "white", color: C.text,
+                          outline: "none", textAlign: "center",
+                        }}
+                      />
+                      <button onClick={handleSubmit} disabled={!nameInput.trim()} style={{
                         fontFamily: "'Jost',sans-serif", fontSize: "0.62rem", letterSpacing: "0.2em",
-                        textTransform: "uppercase", padding: "0.5rem 1.2rem", border: "none",
-                        color: "white", background: C.sage, borderRadius: 4, cursor: "pointer",
-                      }}>Submit ({dist})</button>
-                      <button onClick={() => setNameKnown(false)} style={{
-                        fontFamily: "'Jost',sans-serif", fontSize: "0.62rem", letterSpacing: "0.2em",
-                        textTransform: "uppercase", padding: "0.5rem 1rem", border: `0.5px solid ${C.dusty}`,
-                        color: C.dusty, background: "transparent", borderRadius: 4, cursor: "pointer",
-                      }}>Change Name</button>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <p style={{ fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic", fontSize: "1rem", color: C.warm, margin: "0 0 0.6rem" }}>
-                      Sign the guestbook
-                    </p>
-                    <input
-                      type="text" value={nameInput} onChange={e => setNameInput(e.target.value)}
-                      placeholder="Your name" maxLength={24} autoFocus
-                      onKeyDown={e => { if (e.key === "Enter") handleSubmit() }}
-                      style={{
-                        fontFamily: "'Jost',sans-serif", fontSize: "0.8rem", padding: "0.5rem 0.75rem",
-                        border: `1px solid ${C.linenD}`, borderRadius: 4, width: "100%",
-                        boxSizing: "border-box", background: "white", color: C.text,
-                        outline: "none", textAlign: "center",
-                      }}
-                    />
-                    <button onClick={handleSubmit} disabled={!nameInput.trim()} style={{
-                      fontFamily: "'Jost',sans-serif", fontSize: "0.62rem", letterSpacing: "0.2em",
-                      textTransform: "uppercase", padding: "0.5rem 1.4rem",
-                      border: "none", color: "white", borderRadius: 4, marginTop: "0.6rem",
-                      background: nameInput.trim() ? C.sage : C.linenD,
-                      cursor: nameInput.trim() ? "pointer" : "default",
-                    }}>Save Score: {dist}</button>
-                  </>
-                )}
-              </div>
-            ) : (
-              <p style={{ fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic", fontSize: "0.85rem", color: C.sage, marginTop: "0.75rem" }}>
-                Score submitted!
-              </p>
-            )}
+                        textTransform: "uppercase", padding: "0.5rem 1.4rem",
+                        border: "none", color: "white", borderRadius: 4, marginTop: "0.6rem",
+                        background: nameInput.trim() ? C.sage : C.linenD,
+                        cursor: nameInput.trim() ? "pointer" : "default",
+                      }}>Save Score: {dist}</button>
+                    </>
+                  )}
+                </div>
+              ) : (
+                <p style={{ fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic", fontSize: "0.85rem", color: C.sage, marginTop: "0.75rem" }}>
+                  Score submitted!
+                </p>
+              )}
 
-            {/* Play Again */}
-            <button onClick={() => stateRef.current?.startGame()} style={{
-              fontFamily: "'Jost',sans-serif", fontSize: "0.65rem", letterSpacing: "0.2em",
-              textTransform: "uppercase", padding: "0.6rem 2rem",
-              border: `1px solid ${C.sage}`, color: C.sage,
-              background: "transparent", borderRadius: 4, cursor: "pointer",
-              marginTop: "1.25rem",
-            }}>Play Again</button>
-          </div>
-        )}
+              <button onClick={() => stateRef.current?.startGame()} style={{
+                fontFamily: "'Jost',sans-serif", fontSize: "0.65rem", letterSpacing: "0.2em",
+                textTransform: "uppercase", padding: "0.6rem 2rem",
+                border: `1px solid ${C.sage}`, color: C.sage,
+                background: "transparent", borderRadius: 4, cursor: "pointer",
+                marginTop: "1.25rem",
+              }}>Play Again</button>
+            </>
+          )}
+        </div>
 
       </div>
     </div>
