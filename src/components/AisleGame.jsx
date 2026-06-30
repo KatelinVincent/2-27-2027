@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState, useCallback } from "react"
 
+// ─── Supabase config ─── Replace these with your project values ───
 const SUPABASE_URL = process.env.GATSBY_SUPABASE_URL
 const SUPABASE_KEY = process.env.GATSBY_SUPABASE_KEY
+// ──────────────────────────────────────────────────────────────────
 
 const SB_HEADERS = {
   apikey: SUPABASE_KEY,
@@ -786,7 +788,7 @@ export default function AisleGame() {
       drawPlayer()
       if (gp === "playing") { drawHud(); drawPhotoFlash() }
       if (gp === "idle") drawOverlay("Help Jacob & Kate reach the altar", "How far can you go?", "Arrow keys to move  ·  Mobile: tap or swipe")
-      if (gp === "dead") drawOverlay("The wedding planner is furious", `Distance: ${maxRow}`, "Tap or press any key to retry")
+      if (gp === "dead") drawOverlay("The wedding planner is furious", `Distance: ${maxRow}`, "")
     }
 
     function loop() {
@@ -843,7 +845,7 @@ export default function AisleGame() {
     }
 
     function moveUp() {
-      if (gp === "idle" || gp === "dead") { startGame(); return }
+      if (gp === "idle") { startGame(); return }
       if (gp !== "playing" || stunT > 0) return
       pWR++
       if (pWR > maxRow) {
@@ -859,7 +861,7 @@ export default function AisleGame() {
     const onKey = e => {
       if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return
       if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "].includes(e.key)) e.preventDefault()
-      if (gp === "idle" || gp === "dead") { startGame(); return }
+      if (gp === "idle") { startGame(); return }
       if (e.key === "ArrowUp") moveUp()
       if (e.key === "ArrowDown") moveDown()
       if (e.key === "ArrowLeft") moveLeft()
@@ -893,6 +895,11 @@ export default function AisleGame() {
     const name = nameInput.trim()
     if (name && dist > 0) submitScore(name, dist)
   }
+
+  // Refresh leaderboard when game ends
+  useEffect(() => {
+    if (gameOver) loadLb()
+  }, [gameOver])
 
   return (
     <div id="game" className="full-bleed" style={{ background: "var(--sage-pale,#EDF0E8)", padding: "5rem 0" }}>
@@ -930,71 +937,25 @@ export default function AisleGame() {
         }}>{status}</p>
 
 
-        {gameOver && !submitted && (
-          <div style={{
-            padding: "1.25rem 1.5rem", border: `1px solid ${C.linenD}`,
-            borderRadius: 8, background: C.ivory, maxWidth: 320, margin: "1.25rem auto 0",
-          }}>
-            {nameKnown ? (
-              <>
-                <p style={{ fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic", fontSize: "1.1rem", color: C.warm, margin: "0 0 0.75rem" }}>
-                  Submit as <strong>{playerName}</strong>?
-                </p>
-                <div style={{ display: "flex", gap: "0.5rem", justifyContent: "center" }}>
-                  <button onClick={() => submitScore(playerName, dist)} style={{
-                    fontFamily: "'Jost',sans-serif", fontSize: "0.62rem", letterSpacing: "0.2em",
-                    textTransform: "uppercase", padding: "0.5rem 1.2rem", border: "none",
-                    color: "white", background: C.sage, borderRadius: 4, cursor: "pointer",
-                  }}>Submit ({dist})</button>
-                  <button onClick={() => setNameKnown(false)} style={{
-                    fontFamily: "'Jost',sans-serif", fontSize: "0.62rem", letterSpacing: "0.2em",
-                    textTransform: "uppercase", padding: "0.5rem 1rem", border: `0.5px solid ${C.dusty}`,
-                    color: C.dusty, background: "transparent", borderRadius: 4, cursor: "pointer",
-                  }}>Change Name</button>
-                </div>
-              </>
-            ) : (
-              <>
-                <p style={{ fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic", fontSize: "1.1rem", color: C.warm, margin: "0 0 0.75rem" }}>
-                  Sign the guestbook
-                </p>
-                <input
-                  type="text" value={nameInput} onChange={e => setNameInput(e.target.value)}
-                  placeholder="Your name" maxLength={24} autoFocus
-                  onKeyDown={e => { if (e.key === "Enter") handleSubmit() }}
-                  style={{
-                    fontFamily: "'Jost',sans-serif", fontSize: "0.8rem", padding: "0.5rem 0.75rem",
-                    border: `1px solid ${C.linenD}`, borderRadius: 4, width: "100%",
-                    boxSizing: "border-box", background: "white", color: C.text,
-                    outline: "none", textAlign: "center",
-                  }}
-                />
-                <button onClick={handleSubmit} disabled={!nameInput.trim()} style={{
-                  fontFamily: "'Jost',sans-serif", fontSize: "0.62rem", letterSpacing: "0.2em",
-                  textTransform: "uppercase", padding: "0.5rem 1.4rem",
-                  border: "none", color: "white", borderRadius: 4, marginTop: "0.6rem",
-                  background: nameInput.trim() ? C.sage : C.linenD,
-                  cursor: nameInput.trim() ? "pointer" : "default",
-                }}>Save Score: {dist}</button>
-              </>
-            )}
-          </div>
-        )}
+        {/* Game over panel: leaderboard + submit + play again */}
+        {gameOver && (
+          <div style={{ maxWidth: 340, margin: "1rem auto 0" }}>
 
-        {leaderboard.length > 0 && !idle && (
-          <div style={{ marginTop: "1.5rem", maxWidth: 340, margin: "1.5rem auto 0" }}>
+            {/* Top 5 leaderboard */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: "0.75rem" }}>
               <div style={{ width: 30, height: 1, background: C.sageL }} />
               <span style={{ fontFamily: "'Jost',sans-serif", fontSize: "0.55rem", letterSpacing: "0.25em", textTransform: "uppercase", color: C.sage }}>
-                Guestbook Leaderboard
+                Leaderboard
               </span>
               <div style={{ width: 30, height: 1, background: C.sageL }} />
             </div>
             {lbLoading ? (
               <p style={{ fontSize: "0.75rem", color: C.dusty, fontStyle: "italic" }}>Loading...</p>
+            ) : leaderboard.length === 0 ? (
+              <p style={{ fontSize: "0.75rem", color: C.dusty, fontStyle: "italic" }}>No scores yet — be the first!</p>
             ) : (
               <div style={{ borderTop: `1px solid ${C.linenD}` }}>
-                {leaderboard.slice(0, 10).map((entry, i) => (
+                {leaderboard.slice(0, 5).map((entry, i) => (
                   <div key={`${entry.name}-${entry.created_at}-${i}`} style={{
                     display: "flex", justifyContent: "space-between", alignItems: "center",
                     padding: "0.45rem 0.5rem", borderBottom: `1px solid ${C.linenD}`,
@@ -1018,12 +979,71 @@ export default function AisleGame() {
                 ))}
               </div>
             )}
-            <button onClick={loadLb} style={{
-              fontFamily: "'Jost',sans-serif", fontSize: "0.55rem", letterSpacing: "0.15em",
-              textTransform: "uppercase", padding: "0.4rem 1rem", border: `0.5px solid ${C.dusty}`,
-              color: C.dusty, background: "transparent", borderRadius: 4,
-              cursor: "pointer", marginTop: "0.6rem",
-            }}>Refresh</button>
+
+            {/* Score submission */}
+            {!submitted ? (
+              <div style={{
+                padding: "1rem 1.25rem", border: `1px solid ${C.linenD}`,
+                borderRadius: 8, background: C.ivory, marginTop: "1rem",
+              }}>
+                {nameKnown ? (
+                  <>
+                    <p style={{ fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic", fontSize: "1rem", color: C.warm, margin: "0 0 0.6rem" }}>
+                      Submit as <strong>{playerName}</strong>?
+                    </p>
+                    <div style={{ display: "flex", gap: "0.5rem", justifyContent: "center" }}>
+                      <button onClick={() => submitScore(playerName, dist)} style={{
+                        fontFamily: "'Jost',sans-serif", fontSize: "0.62rem", letterSpacing: "0.2em",
+                        textTransform: "uppercase", padding: "0.5rem 1.2rem", border: "none",
+                        color: "white", background: C.sage, borderRadius: 4, cursor: "pointer",
+                      }}>Submit ({dist})</button>
+                      <button onClick={() => setNameKnown(false)} style={{
+                        fontFamily: "'Jost',sans-serif", fontSize: "0.62rem", letterSpacing: "0.2em",
+                        textTransform: "uppercase", padding: "0.5rem 1rem", border: `0.5px solid ${C.dusty}`,
+                        color: C.dusty, background: "transparent", borderRadius: 4, cursor: "pointer",
+                      }}>Change Name</button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <p style={{ fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic", fontSize: "1rem", color: C.warm, margin: "0 0 0.6rem" }}>
+                      Sign the guestbook
+                    </p>
+                    <input
+                      type="text" value={nameInput} onChange={e => setNameInput(e.target.value)}
+                      placeholder="Your name" maxLength={24} autoFocus
+                      onKeyDown={e => { if (e.key === "Enter") handleSubmit() }}
+                      style={{
+                        fontFamily: "'Jost',sans-serif", fontSize: "0.8rem", padding: "0.5rem 0.75rem",
+                        border: `1px solid ${C.linenD}`, borderRadius: 4, width: "100%",
+                        boxSizing: "border-box", background: "white", color: C.text,
+                        outline: "none", textAlign: "center",
+                      }}
+                    />
+                    <button onClick={handleSubmit} disabled={!nameInput.trim()} style={{
+                      fontFamily: "'Jost',sans-serif", fontSize: "0.62rem", letterSpacing: "0.2em",
+                      textTransform: "uppercase", padding: "0.5rem 1.4rem",
+                      border: "none", color: "white", borderRadius: 4, marginTop: "0.6rem",
+                      background: nameInput.trim() ? C.sage : C.linenD,
+                      cursor: nameInput.trim() ? "pointer" : "default",
+                    }}>Save Score: {dist}</button>
+                  </>
+                )}
+              </div>
+            ) : (
+              <p style={{ fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic", fontSize: "0.85rem", color: C.sage, marginTop: "0.75rem" }}>
+                Score submitted!
+              </p>
+            )}
+
+            {/* Play Again */}
+            <button onClick={() => stateRef.current?.startGame()} style={{
+              fontFamily: "'Jost',sans-serif", fontSize: "0.65rem", letterSpacing: "0.2em",
+              textTransform: "uppercase", padding: "0.6rem 2rem",
+              border: `1px solid ${C.sage}`, color: C.sage,
+              background: "transparent", borderRadius: 4, cursor: "pointer",
+              marginTop: "1.25rem",
+            }}>Play Again</button>
           </div>
         )}
 
