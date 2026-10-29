@@ -6,6 +6,7 @@ import Photos from "../components/Photos"
 import AisleGame from "../components/AisleGame"
 import Details from "../components/Details"
 import Registry from "../components/Registry"
+import Travel from "../components/Travel"
 import SignupPopup from "../components/alertPopUp"
 
 export default function IndexPage() {
@@ -17,6 +18,7 @@ export default function IndexPage() {
       <Photos />
       <AisleGame />
       <Details />
+      <Travel />
       <Registry />
     </Layout>
   )

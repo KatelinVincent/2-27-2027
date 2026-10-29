@@ -35,6 +35,7 @@ const links = [
   { label: "Our Story", href: "#story" },
   { label: "Photos",    href: "#photos" },
   { label: "Details",   href: "#details" },
+  { label: "Stay & Eat", href: "#travel" },
   { label: "The Aisle", href: "#game" },
   { label: "Registry",  href: "#registry" },
 ]
